@@ -66,31 +66,33 @@
                               color = "green"
                            elsif status == "Ausente"
                               color = "red"
-                           elsif status == "---"
+                           elsif status == "Aguarde"
                               color = "gray"
                             elsif status == "Pago"
                               color = "blue"
-                           else
+                            elsif status == "Finalizado"
                               color = "darkgoldenrod"
+                           else
+                              color = "fucsia"
                            end
                         %>
                         <div class="row">
                           <%= content_tag :span, style: "color:#{color};" do -%>
                             <%= status %>
                           <% end -%>
-                          <% if status != "---" %>
+                          <% if status != "Aguarde" && status != "Finalizado" %>
                             <%= link_to edit_assistant_frequency_comment_path(role.frequency_for_month(month)), "data-toggle" => "tooltip", title: "Fazer observação" do %>
-                              <span class="glyphicon glyphicon-comment"></span>
+                                <span class="glyphicon glyphicon-comment"></span>
                             <% end %>
                           <% end %>
                         </div>
                         <div class="row">
-                          <% if status != "---" %>
+                          <% if status != "Aguarde" && status != "Finalizado" %>
                             <%= role.frequency_for_month(month).comment %>
                           <% end %>
                         </div>
                       <% end %>
-                    </div>
+                      </div>
                   </div>
                 <% end %>
               </div>

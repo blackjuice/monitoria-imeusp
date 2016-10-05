@@ -101,9 +101,15 @@ class AssistantRole < ActiveRecord::Base
     end
     if !found
       if active and semester.frequency_open?(Semester.month_to_period month)
+        if self.started_at.mon > month || self.finished_at.mon < month
+          return "Finalizado"
+        end
         return "Pendente"
       else
-        return "---"
+        if self.started_at.mon > month || self.finished_at.mon < month
+          return "Finalizado"
+        end
+        return "Aguarde"
       end
     end
   end
@@ -125,9 +131,15 @@ class AssistantRole < ActiveRecord::Base
     end
     if !found
       if active and semester.frequency_open?(period)
+        if Semester.month_to_period(self.started_at.mon) > period || Semester.month_to_period(self.finished_at.mon) < period
+          return "Finalizado"
+        end
         return "Pendente"
       else
-        return "---"
+        if Semester.month_to_period(self.started_at.mon) > period || Semester.month_to_period(self.finished_at.mon) < period
+          return "Finalizado"
+        end
+        return "Aguarde"
       end
     end
   end
