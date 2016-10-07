@@ -75,7 +75,9 @@ class AssistantRole < ActiveRecord::Base
   def self.all_current
     semester = Semester.current
     requests = RequestForTeachingAssistant.where(semester: semester)
-    AssistantRole.where(request_for_teaching_assistant: requests, active: true)
+    DateTime last_day = DateTime.new(DateTime.now.year, 1, 1)
+    DateTime first_day = DateTime.new(DateTime.now.year, 12, 31)
+    AssistantRole.where(request_for_teaching_assistant: requests, active: true, started_at: first_day..DateTime.now, finished_at: DateTime.now..last_day)
   end
 
   def self.pending_for_month month
